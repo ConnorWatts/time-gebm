@@ -38,7 +38,7 @@ import numpy as np
     
 def PCA_Analysis (dataX, dataX_hat,name,dir):
 
-    ## TIMEGAN PAPER
+    ## from https://github.com/jsyoon0823/TimeGAN
   
     # Analysis Data Size
     
@@ -116,7 +116,7 @@ def do_PCA_Analysis(args,samples_gen,name, directory):
     
 def tSNE_Analysis (dataX, dataX_hat,name,dir):
 
-    ## TIMEGAN PAPER
+    ## ## from https://github.com/jsyoon0823/TimeGAN
   
     # Analysis Data Size
     if len(dataX) < 1000:
