@@ -30,7 +30,7 @@ import torch.optim as optim
 
 import time
 from PIL import Image, ImageFilter
-from utils.dataloader import SineDataset, google_data_loading, StockDataset, chickenpox_data_loading, ChickenpoxDataset, energy_data_loadinng, EnergyDataset
+from utils.dataloader import SineDataset, google_data_loading, StockDataset, chickenpox_data_loading, ChickenpoxDataset, energy_data_loading, EnergyDataset, gaus_data_loading, GaudDataset
 #import samplers
 import sys
 
