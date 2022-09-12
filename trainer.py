@@ -1,4 +1,5 @@
 ### TRAINER.py
+### modified from https://github.com/MichaelArbel/GeneralizedEBM/blob/master/trainer.py
 
 import math
 
