@@ -22,6 +22,10 @@ import torch
 from scipy import linalg 
 
 
+#taken from https://github.com/MichaelArbel/GeneralizedEBM/blob/master/compute.py
+#where it is not we explicitly state the source
+#all credit goes to the authors
+
 def rnn_loss(true_data,fake_data,loss_type):
   ## https://github.com/cjbayron/c-rnn-gan.pytorch/blob/master/train.py
   EPSILON = 1e-40 
@@ -48,6 +52,7 @@ def rnn_loss(true_data,fake_data,loss_type):
 
 
 def lsgan(true_data,fake_data,loss_type):
+  #https://github.com/imics-lab/tts-gan
   if loss_type=='discriminator':
     if isinstance(fake_data, list):
       d_loss = 0
