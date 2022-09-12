@@ -11,6 +11,7 @@ from torch import nn
 import torch.nn.functional as F
 #import compute as cp
 #taken and modified from https://github.com/MichaelArbel/GeneralizedEBM/blob/master/samplers.py
+#all credit goes to oriinal authors
 
  
 class Latent_potential(nn.Module):
