@@ -25,7 +25,7 @@ import helpers as hp
 import compute as cp
 import samplers
 from utils import timer
-from score import get_predicitive_scores, get_discriminative_scores
+from score import get_predicitive_score, get_discriminative_score
 
 import models
 
