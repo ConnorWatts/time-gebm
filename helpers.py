@@ -1,4 +1,6 @@
 ### HELPERS.py
+### modified from https://github.com/MichaelArbel/GeneralizedEBM/blob/master/helpers.py
+### all credit goes to original author
 
 
 import argparse
