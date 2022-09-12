@@ -1,5 +1,6 @@
-  ### MAIN.py
-
+### MAIN.py
+### this file is modified from https://github.com/MichaelArbel/GeneralizedEBM/blob/master/main.py
+### all credit goes to the author
 
 from __future__ import print_function
 
