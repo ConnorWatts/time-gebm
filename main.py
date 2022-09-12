@@ -42,7 +42,7 @@ parser.add_argument('--id', default="Gaus_crnn_gan_1", help='')
 parser.add_argument('--d_path', default="/content/logs/train/cifar10/checkpoints_Gaus_crnn_gan_1_/d_best.pth", help='path to the trained energy network')
 parser.add_argument('--g_path', default="/content/logs/train/cifar10/checkpoints_Gaus_crnn_gan_1_/g_best.pth", help='path to the trained base network')
 parser.add_argument('--mode', type=str, default='train',   help='either "train" or "sample" ')
-parser.add_argument('--dataset_type', default ='Gaus' ,type= str , help='image dataset or others ["images","uci"]')
+parser.add_argument('--dataset_type', default ='Stock' ,type= str , help='image dataset or others ["images","uci"]')
 parser.add_argument('--features', default = 3, type= int,   help='features of time series')
 #Sine, Stock 5 Energy 28 Chickpox 20
 
