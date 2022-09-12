@@ -108,6 +108,8 @@ class SineDataset(Dataset):
 ### from original timeGAN paper
 
 def MinMaxScaler(data):
+  
+  ### from https://github.com/jsyoon0823/TimeGAN
     numerator = data - np.min(data, 0)
     denominator = np.max(data, 0) - np.min(data, 0)
     return numerator / (denominator + 1e-7)
@@ -116,7 +118,7 @@ def MinMaxScaler(data):
     
 def google_data_loading (seq_length):
 
-    #### from original timeGAN paper
+    #### from https://github.com/jsyoon0823/TimeGAN
     # Load Google Data
     x = np.loadtxt('GOOGLE_BIG.csv', delimiter = ",",skiprows = 1)
     # Flip the data to make chronological data
@@ -144,7 +146,7 @@ def google_data_loading (seq_length):
 
 def chickenpox_data_loading (seq_length):
 
-    #### from original timeGAN paper
+    #### from https://github.com/jsyoon0823/TimeGAN
     # Load Google Data
     x = np.loadtxt('hungary_chickenpox.csv', delimiter = ",",skiprows = 1,usecols=range(1,21))
 
@@ -172,7 +174,7 @@ def chickenpox_data_loading (seq_length):
 
 def energy_data_loading (seq_length):
 
-    #### from original timeGAN paper
+    #### from https://github.com/jsyoon0823/TimeGANoriginal timeGAN paper
     # Load Google Data
     x = np.loadtxt('energy_data.csv', delimiter = ",",skiprows = 1)
     # Flip the data to make chronological data
