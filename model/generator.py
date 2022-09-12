@@ -3,6 +3,7 @@
 
 
 ### GEBM Generators
+### the following is from https://github.com/imics-lab/tts-gan
 
 
 import torch
@@ -131,6 +132,9 @@ class FeedForwardBlock(nn.Sequential):
             nn.Dropout(drop_p),
             nn.Linear(expansion * emb_size, emb_size),
         )
+        
+        
+## the following is from https://github.com/cjbayron/c-rnn-gan.pytorch
 
 import torch
 import torch.nn as nn
