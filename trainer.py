@@ -21,12 +21,12 @@ import pdb
 
 import timeit
 
-#import helpers as hp
-#import compute as cp
-#import samplers
-#from utils import timer
+import helpers as hp
+import compute as cp
+import samplers
+from utils import timer
 
-#import models
+import models
 
 class Trainer(object):
     def __init__(self, args):
