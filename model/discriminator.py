@@ -13,6 +13,7 @@ from torch.nn.utils import spectral_norm as sn_official
 spectral_norm = sn_official
 
 ### TTS Discriminator
+### the following is from https://github.com/imics-lab/tts-gan
 
 import torch
 import torch.nn as nn
@@ -157,7 +158,13 @@ class DiscriminatorTTS(nn.Sequential):
             Dis_TransformerEncoder(depth, emb_size=emb_size, drop_p=0.5, forward_drop_p=0.5, **kwargs),
             ClassificationHead(emb_size, n_classes)
         )
+        
+        
+##CRNNGAN discriminator
 
+## the following is from https://github.com/cjbayron/c-rnn-gan.pytorch       
+        
+        
 class DiscriminatorCRNN(nn.Module):
     ''' C-RNN-GAN discrminator
     '''
