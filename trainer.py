@@ -33,11 +33,11 @@ class Trainer(object):
         torch.manual_seed(args.seed)
         np.random.seed(args.seed)
         self.args = args
-        self.device = assign_device(args.device)
+        self.device = hp.assign_device(args.device)
         #self.run_id = str(round(time.time() % 1e7))
         self.run_id = args.id
         print(f"Run id: {self.run_id}")
-        self.log_dir, self.checkpoint_dir, self.samples_dir = init_logs(args, self.run_id, self.log_dir_formatter(args) )
+        self.log_dir, self.checkpoint_dir, self.samples_dir = hp.init_logs(args, self.run_id, self.log_dir_formatter(args) )
         
         print(f"Process id: {str(os.getpid())} | hostname: {socket.gethostname()}")
         print(f"Run id: {self.run_id}")
@@ -57,11 +57,11 @@ class Trainer(object):
 
 
     def build_model(self):
-        self.train_loader, self.test_loader, self.valid_loader,self.input_dims = get_data_loader(self.args,self.args.b_size, self.args.num_workers)
+        self.train_loader, self.test_loader, self.valid_loader,self.input_dims = hp.get_data_loader(self.args,self.args.b_size, self.args.num_workers)
         
-        self.generator = get_base(self.args, self.input_dims, self.device)
-        self.discriminator = get_energy(self.args,self.input_dims, self.device)
-        self.noise_gen = get_latent_noise(self.args,self.args.Z_dim, self.device)
+        self.generator = hp.get_base(self.args, self.input_dims, self.device)
+        self.discriminator = hp.get_energy(self.args,self.input_dims, self.device)
+        self.noise_gen = hp.get_latent_noise(self.args,self.args.Z_dim, self.device)
         self.fixed_latents = self.noise_gen.sample([64])
         self.eval_latents =torch.cat([ self.noise_gen.sample([self.args.sample_b_size]).cpu() for b in range(int(self.args.fid_samples/self.args.sample_b_size)+1)], dim=0)
         self.eval_latents = self.eval_latents[:self.args.fid_samples]
@@ -86,27 +86,27 @@ class Trainer(object):
 
         if self.mode == 'train':
             # optimizers
-            self.optim_d = get_optimizer(self.args, 'discriminator', self.d_params)
-            self.optim_g = get_optimizer(self.args, 'generator', self.generator.parameters())
-            self.optim_partition = get_optimizer(self.args, 'discriminator', [self.log_partition])
+            self.optim_d = hp.get_optimizer(self.args, 'discriminator', self.d_params)
+            self.optim_g = hp.get_optimizer(self.args, 'generator', self.generator.parameters())
+            self.optim_partition = hp.get_optimizer(self.args, 'discriminator', [self.log_partition])
             # schedulers
-            self.scheduler_d = get_scheduler(self.args, self.optim_d)
-            self.scheduler_g = get_scheduler(self.args, self.optim_g)
-            self.scheduler_partition = get_scheduler(self.args, self.optim_partition)
-            self.loss = get_loss(self.args)
+            self.scheduler_d = hp.get_scheduler(self.args, self.optim_d)
+            self.scheduler_g = hp.get_scheduler(self.args, self.optim_g)
+            self.scheduler_partition = hp.get_scheduler(self.args, self.optim_partition)
+            self.loss = hp.get_loss(self.args)
             self.counter = 0
             self.g_counter = 0
             self.g_loss = torch.tensor(0.)
             self.d_loss = torch.tensor(0.)
 
         if self.args.latent_sampler in ['imh', 'dot','spherelangevin']:
-            self.latent_potential = Independent_Latent_potential(self.generator,self.discriminator,self.noise_gen) 
+            self.latent_potential = samplers.Independent_Latent_potential(self.generator,self.discriminator,self.noise_gen) 
         elif self.args.latent_sampler in ['zero_temperature_langevin']:
-            self.latent_potential = Cold_Latent_potential(self.generator,self.discriminator) 
+            self.latent_potential = samplers.Cold_Latent_potential(self.generator,self.discriminator) 
         else:
-            self.latent_potential = Latent_potential(self.generator,self.discriminator,self.noise_gen, self.args.temperature) 
+            self.latent_potential = samplers.Latent_potential(self.generator,self.discriminator,self.noise_gen, self.args.temperature) 
         
-        self.latent_sampler = get_latent_sampler(self.args, self.latent_potential,self.args.Z_dim, self.device)
+        self.latent_sampler = hp.get_latent_sampler(self.args, self.latent_potential,self.args.Z_dim, self.device)
 
         dev_count = torch.cuda.device_count()    
         if self.args.dataparallel and dev_count>1 :
@@ -153,7 +153,7 @@ class Trainer(object):
         #g_path = os.path.join(self.checkpoint_dir, f'g_best.pth')
         #g_path = os.path.join(f'/content', g_path)
         g_model = torch.load(self.args.g_path, map_location=self.device)
-        self.noise_gen = get_normal(self.args.Z_dim, self.device)
+        self.noise_gen = hp.get_normal(self.args.Z_dim, self.device)
         self.generator.load_state_dict(g_model)
         self.generator = self.generator.to(self.device)
 
@@ -345,7 +345,7 @@ class Trainer(object):
 
     def add_penalty(self,loss, net_type, data, fake_data):
         if net_type=='discriminator':
-            penalty = self.args.penalty_lambda * penalty_d(self.args, self.discriminator, data, fake_data, self.device)
+            penalty = self.args.penalty_lambda * cp.penalty_d(self.args, self.discriminator, data, fake_data, self.device)
             total_loss = loss + penalty
         else:
             total_loss = loss
@@ -368,7 +368,7 @@ class Trainer(object):
 
     def compute_log_partition(self,fake_results, net_type, with_batch_est = False):
         batch_log_partition = torch.logsumexp(-fake_results, dim=0)- np.log(fake_results.shape[0])
-        batch_log_partition = batch_log_partition.squeeze()
+        batch_log_partition = cp.batch_log_partition.squeeze()
         val_log_partition = self.log_partition
         tmp = fake_results + val_log_partition
 
@@ -416,10 +416,10 @@ class Trainer(object):
                 for img in base_loader:
                     energy  = -self.discriminator(img.to(self.device))
                     if self.args.criterion == 'donsker':
-                        base_mean,M = iterative_log_sum_exp(torch.exp(energy),base_mean,M)
+                        base_mean,M = cp.iterative_log_sum_exp(torch.exp(energy),base_mean,M)
                     else:
                         energy = -torch.exp(energy - self.log_partition ) 
-                        base_mean, M = iterative_mean(energy, base_mean,M)
+                        base_mean, M = cp.iterative_mean(energy, base_mean,M)
             if self.args.criterion=='donsker':
                 log_partition = 1.*base_mean -np.log(M)
                 base_mean = torch.tensor(-1.).to(self.device)
@@ -433,7 +433,7 @@ class Trainer(object):
         for data, target in data_loader: 
             with torch.no_grad():
                 data_energy = -(self.discriminator(data.to(self.device)) + log_partition)
-            data_mean, M = iterative_mean(data_energy, data_mean,M)
+            data_mean, M = cp.iterative_mean(data_energy, data_mean,M)
 
         KALE = data_mean + base_mean + 1
         return KALE, base_mean, log_partition
