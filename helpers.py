@@ -22,16 +22,16 @@ import torch.nn.functional as F
 import torch.optim as optim
 
 
-#from models.generator import Generator
-#from models.discriminator import Discriminator
+from models.generator import GeneratorCRNN, GeneratorTTS
+from models.discriminator import DiscriminatorCRNN, DiscriminatorTTS
 #from models import energy_model
 
-#import compute as cp
+import compute as cp
 
 import time
 from PIL import Image, ImageFilter
 from utils.dataloader import SineDataset, google_data_loading, StockDataset, chickenpox_data_loading, ChickenpoxDataset, energy_data_loading, EnergyDataset, gaus_data_loading, GaudDataset
-#import samplers
+import samplers
 import sys
 
 
@@ -101,22 +101,24 @@ def get_data_loader(args, b_size,num_workers):
     return trainloader,testloader,validloader, input_dims
 
 
+the 
+
 # choose loss type
 def get_loss(args):
     if args.criterion=='hinge':
-        return hinge
+        return cp.hinge
     elif args.criterion=='wasserstein':
-        return wasserstein
+        return cp.wasserstein
     elif args.criterion=='logistic':
-        return logistic
+        return cp.logistic
     elif args.criterion == 'lsgan':
-        return lsgan
+        return cp.lsgan
     elif args.criterion == 'rnn_loss':
-        return rnn_loss
+        return cp.rnn_loss
     elif args.criterion in ['kale', 'donsker']:
-        return kale
+        return cp.kale
     elif args.criterion=='kale-nlp':
-        return kale
+        return cp.kale
 
 # choose the optimizer
 def get_optimizer(args, net_type, params):
@@ -176,26 +178,7 @@ class ConditionalNoiseGen(nn.Module):
 
 def get_latent_sampler(args,potential,Z_dim,device):
     momentum = get_normal(Z_dim,device)
-    if args.latent_sampler=='hmc':
-        return HMCsampler(potential,momentum, T=args.num_sampler_steps, num_steps_min=10, num_steps_max=20,gamma=args.lmc_gamma,  kappa = args.lmc_kappa)
-    elif args.latent_sampler=='lmc':
-        return LMCsampler(potential,momentum, T=args.num_sampler_steps, num_steps_min=10, num_steps_max=20,gamma=args.lmc_gamma,  kappa = args.lmc_kappa)
-    elif args.latent_sampler=='langevin':
-        return LangevinSampler(potential,  T=args.num_sampler_steps,gamma=args.lmc_gamma)
-    elif args.latent_sampler=='zero_temperature_langevin':
-        return ZeroTemperatureSampler(potential,  T=args.num_sampler_steps,gamma=args.lmc_gamma)
-    elif args.latent_sampler=='mala':
-        return MALA(potential,  T=args.num_sampler_steps,gamma=args.lmc_gamma)
-    elif args.latent_sampler=='spherelangevin':
-        return SphereLangevinSampler(potential,  T=args.num_sampler_steps,gamma=args.lmc_gamma)
-    elif args.latent_sampler=='dot':
-        return DOT(potential,  T=args.num_sampler_steps,gamma=args.lmc_gamma)
-    elif args.latent_sampler=='trunclangevin':
-        return TruncLangevinSampler(potential,momentum,trunc=args.trunc,  T=args.num_sampler_steps, num_steps_min=10, num_steps_max=20,gamma=args.lmc_gamma,  kappa = args.lmc_kappa)
-    elif args.latent_sampler=='mh':
-        return MetropolisHastings(potential, T=args.num_sampler_steps, gamma=args.lmc_gamma )
-    elif args.latent_sampler=='imh':
-        return IndependentMetropolisHastings(potential,  T=args.num_sampler_steps, gamma=args.lmc_gamma)
+    return samplers.LangevinSampler(potential,  T=args.num_sampler_steps,gamma=args.lmc_gamma)
 
 
 def get_latent_noise(args,dim,device):
