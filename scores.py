@@ -13,7 +13,9 @@ from tensorflow.keras.losses import MeanAbsoluteError
 from sklearn.metrics import r2_score, mean_absolute_error, mean_squared_log_error
 
 
-#implementation from https://github.com/ydataai/ydata-synthetic/blob/dev/examples/timeseries/TimeGAN_Synthetic_stock_data.ipynb
+#implementations are from from https://github.com/ydataai/ydata-synthetic/blob/dev/examples/timeseries/TimeGAN_Synthetic_stock_data.ipynb
+#all credit goes to the original authors
+#helper functions are original 
 
 def RNN_prediction(units,input_size):
     opt = Adam(name='AdamOpt')
