@@ -235,7 +235,7 @@ class Trainer(object):
                 if self.args.train_mode in ['both', 'base'] and self.args.dataset_type in ['Sine','Stock','Energy','Gaus','Chickenpox']:
                     images = self.sample_images(self.eval_latents, self.args.sample_b_size)
                     if self.args.dataset_type != "Gaus":
-                      make_and_save_ts_images(images, f'Iter_{str(self.g_counter).zfill(3)}', self.samples_dir)
+                      #make_and_save_ts_images(images, f'Iter_{str(self.g_counter).zfill(3)}', self.samples_dir)
                       do_PCA_Analysis(self.args,images,f'PCA_Iter_{str(self.g_counter).zfill(3)}', self.samples_dir)
                       do_tSNE_Analysis(self.args,images,f'tSNE_Iter_{str(self.g_counter).zfill(3)}', self.samples_dir)
                     pred = get_predictive_score(self.args,images)
@@ -483,7 +483,7 @@ class Trainer(object):
             end = time.time()
             start = end
             if  i%1==0:
-                make_and_save_ts_images(images, f'Sample_{str(i).zfill(3)}', self.samples_dir)
+                #make_and_save_ts_images(images, f'Sample_{str(i).zfill(3)}', self.samples_dir)
                 do_PCA_Analysis(self.args,images,f'PCA_Iter_{str(i).zfill(3)}', self.samples_dir)
                 do_tSNE_Analysis(self.args,images,f'tSNE_Iter_{str(i).zfill(3)}', self.samples_dir)
                 pred = get_predictive_score(self.args,images)
