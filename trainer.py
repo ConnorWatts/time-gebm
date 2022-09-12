@@ -26,6 +26,7 @@ import compute as cp
 import samplers
 from utils import timer
 from score import get_predicitive_score, get_discriminative_score
+from utils.visualisation import do_tSNE_analysis, do_PCA_analysis
 
 import models
 
