@@ -24,15 +24,15 @@ import torch.nn.functional as F
 import torch.optim as optim
 
 
-from models.generator import GeneratorCRNN, GeneratorTTS
-from models.discriminator import DiscriminatorCRNN, DiscriminatorTTS
+from model.generator import GeneratorCRNN, GeneratorTTS
+from model.discriminator import DiscriminatorCRNN, DiscriminatorTTS
 #from models import energy_model
 
 import compute as cp
 
 import time
 from PIL import Image, ImageFilter
-from utils.dataloader import SineDataset, google_data_loading, StockDataset, chickenpox_data_loading, ChickenpoxDataset, energy_data_loading, EnergyDataset, gaus_data_loading, GaudDataset
+from utils.dataloader import SineDataset, google_data_loading, StockDataset, chickenpox_data_loading, ChickenpoxDataset, energy_data_loading, EnergyDataset, gaus_data_loading, GausDataset
 import samplers
 import sys
 
@@ -101,9 +101,6 @@ def get_data_loader(args, b_size,num_workers):
     elif args.dataset_type == 'Gaus':
         trainloader,testloader,validloader, input_dims = get_gaus_data_loader(args, b_size,num_workers)    
     return trainloader,testloader,validloader, input_dims
-
-
-the 
 
 # choose loss type
 def get_loss(args):

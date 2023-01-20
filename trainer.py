@@ -25,11 +25,11 @@ import timeit
 import helpers as hp
 import compute as cp
 import samplers
-from utils import timer
-from score import get_predicitive_score, get_discriminative_score
-from utils.visualisation import do_tSNE_analysis, do_PCA_analysis
+#from utils import timer
+from scores import get_predictive_score, get_discriminative_score
+from utils.visualization import do_tSNE_Analysis, do_PCA_Analysis
 
-import models
+#import models
 
 class Trainer(object):
     def __init__(self, args):
@@ -48,7 +48,7 @@ class Trainer(object):
         self.pp = pprint.PrettyPrinter(indent=4)
         self.pp.pprint(vars(args))
         print('==> Building model..')
-        self.timer = Timer()
+        #self.timer = Timer()
         self.mode = args.mode
         self.build_model()
 
@@ -332,7 +332,7 @@ class Trainer(object):
             if self.args.grad_clip>0:
                 self.grad_clip(optimizer, net_type=net_type)
             optimizer.step()
-         return loss
+        return loss
 
     def prepare_optimizer(self,net_type):
         if net_type=='discriminator':           

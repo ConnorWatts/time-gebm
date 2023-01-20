@@ -25,7 +25,7 @@ import numpy as np
 from torchvision.transforms import Compose, Resize, ToTensor
 from einops import rearrange, reduce, repeat
 from einops.layers.torch import Rearrange, Reduce
-from torchsummary import summary
+#from torchsummary import summary
 
 class MultiHeadAttention(nn.Module):
     def __init__(self, emb_size, num_heads, dropout):

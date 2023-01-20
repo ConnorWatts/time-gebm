@@ -11,6 +11,8 @@ from tensorflow.keras.layers import GRU, Dense
 from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.losses import MeanAbsoluteError
 from sklearn.metrics import r2_score, mean_absolute_error, mean_squared_log_error
+import numpy as np
+from utils.dataloader import sine_data_generation, energy_data_loading, google_data_loading, chickenpox_data_loading
 
 
 #implementations are from from https://github.com/ydataai/ydata-synthetic/blob/dev/examples/timeseries/TimeGAN_Synthetic_stock_data.ipynb

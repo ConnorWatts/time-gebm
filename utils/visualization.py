@@ -2,8 +2,9 @@
 from matplotlib import pyplot as plt
 import matplotlib.gridspec as gridspec
 import os
+from utils.dataloader import sine_data_generation, energy_data_loading, google_data_loading, chickenpox_data_loading
 
-def make_and_save_ts_images(images,name,samples_dir):
+def make_and_save_ts_images(args,images,name,samples_dir):
   class_name = "Jumping"
   
   samples = images[:10].cpu().numpy()

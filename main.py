@@ -8,8 +8,7 @@ from __future__ import print_function
 import argparse
 import yaml
 import torch
-
-from trainer import Trainer,
+from trainer import Trainer
 
 # import warnings filter
 from warnings import simplefilter

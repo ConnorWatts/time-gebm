@@ -7,7 +7,7 @@
 import numpy as np
 from sklearn.metrics.pairwise import euclidean_distances
 from scipy.spatial.distance import pdist
-import h5py as h5
+#import h5py as h5
 from scipy.stats import truncnorm as tnorm
 from scipy.linalg import expm
 #from autograd import elementwise_grad
@@ -34,7 +34,7 @@ from scipy import io #for loadmat, matlab conversion
 import pandas as pd
 import numpy as np
 #import matplotlib.pyplot as plt # for plotting - pandas uses matplotlib
-from tabulate import tabulate # for verbose tables
+#from tabulate import tabulate # for verbose tables
 #from tensorflow.keras.utils import to_categorical # for one-hot encoding
 
 #credit https://stackoverflow.com/questions/9419162/download-returned-zip-file-from-url
@@ -120,7 +120,7 @@ def google_data_loading (seq_length):
 
     #### from https://github.com/jsyoon0823/TimeGAN
     # Load Google Data
-    x = np.loadtxt('GOOGLE_BIG.csv', delimiter = ",",skiprows = 1)
+    x = np.loadtxt('data/stock_data.csv', delimiter = ",",skiprows = 1)
     # Flip the data to make chronological data
     x = x[:,:-1]
     x = x[::-1]
@@ -270,7 +270,7 @@ class EnergyDataset(Dataset):
         if args.generator == "tts":
             self.data = np.transpose(self.data, (0, 2, 1))
             self.data = np.expand_dims(self.data, axis=2)
-)
+
 
     def __len__(self):
         return len(self.data)
