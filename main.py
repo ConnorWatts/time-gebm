@@ -81,6 +81,7 @@ parser.add_argument('--device', default = 0 ,type= int,   help='gpu device [0]')
 parser.add_argument('--seed', default = 0 ,type= int ,    help='seed for randomness [0]')
 parser.add_argument('--dtype', default='32', type= str,   help='32 for float32 and 64 for float64 ["32"]')
 parser.add_argument('--num_workers', default=4, type=int, help='Number of workers of the dataloader [4]')
+#parser.add_argument('--dataparallel', action='store_true', help='parallelize over multiple gpus [False]')
 parser.add_argument('--dataparallel', action='store_true', help='parallelize over multiple gpus [False]')
 parser.add_argument('--slurm_id', default = '',type= str,  help='job id when using slurm, modified internally ['']')
 
