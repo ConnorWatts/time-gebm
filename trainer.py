@@ -112,9 +112,9 @@ class Trainer(object):
         self.latent_sampler = hp.get_latent_sampler(self.args, self.latent_potential,self.args.Z_dim, self.device)
 
         dev_count = torch.cuda.device_count()    
-        if self.args.dataparallel and dev_count>1 :
-            self.generator = torch.nn.DataParallel(self.generator,device_ids=list(range(dev_count)))
-            self.discriminator = torch.nn.DataParallel(self.discriminator,device_ids=list(range(dev_count)))
+        #if self.args.dataparallel and dev_count>1 :
+            #self.generator = torch.nn.DataParallel(self.generator,device_ids=list(range(dev_count)))
+            #self.discriminator = torch.nn.DataParallel(self.discriminator,device_ids=list(range(dev_count)))
         self.accum_loss_g = []
         self.accum_loss_d = []
         self.true_train_scores = None

@@ -28,7 +28,7 @@
     "device": 0,
     "seed": 0,
     "dtype": "32",
-    "num_workers": 4,
+    "num_workers": 1,
     "dataparallel": false,
     "slurm_id": "",
     "trainer_type": "default",
