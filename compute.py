@@ -57,14 +57,14 @@ def lsgan(true_data,fake_data,loss_type):
     if isinstance(fake_data, list):
       d_loss = 0
       for real_validity_item, fake_validity_item in zip(true_data, fake_data):
-        real_label = torch.full((real_validity_item.shape[0],real_validity_item.shape[1]), 1., dtype=torch.float, device=true_data.get_device())
-        fake_label = torch.full((real_validity_item.shape[0],real_validity_item.shape[1]), 0., dtype=torch.float, device=true_data.get_device())
+        real_label = torch.full((real_validity_item.shape[0],real_validity_item.shape[1]), 1., dtype=torch.float, device=true_data.device)
+        fake_label = torch.full((real_validity_item.shape[0],real_validity_item.shape[1]), 0., dtype=torch.float, device=true_data.device)
         d_real_loss = nn.MSELoss()(real_validity_item, real_label)
         d_fake_loss = nn.MSELoss()(fake_validity_item, fake_label)
         d_loss += d_real_loss + d_fake_loss
     else:
-      real_label = torch.full((true_data.shape[0],true_data.shape[1]), 1., dtype=torch.float, device=true_data.get_device())
-      fake_label = torch.full((true_data.shape[0],true_data.shape[1]), 0., dtype=torch.float, device=true_data.get_device())
+      real_label = torch.full((true_data.shape[0],true_data.shape[1]), 1., dtype=torch.float, device=true_data.device)
+      fake_label = torch.full((true_data.shape[0],true_data.shape[1]), 0., dtype=torch.float, device=true_data.device)
       d_real_loss = nn.MSELoss()(true_data, real_label)
       d_fake_loss = nn.MSELoss()(fake_data, fake_label)
       d_loss = d_real_loss + d_fake_loss
@@ -76,7 +76,7 @@ def lsgan(true_data,fake_data,loss_type):
         real_label = torch.full((fake_validity_item.shape[0],fake_validity_item.shape[1]), 1., dtype=torch.float, device=true_data.get_device())
         g_loss += nn.MSELoss()(fake_validity_item, real_label)
     else:
-      real_label = torch.full((fake_data.shape[0],fake_data.shape[1]), 1., dtype=torch.float, device=true_data.get_device())
+      real_label = torch.full((fake_data.shape[0],fake_data.shape[1]), 1., dtype=torch.float, device=true_data.device)
                         # fake_validity = nn.Sigmoid()(fake_validity.view(-1))
       g_loss = nn.MSELoss()(fake_data, real_label)
     return g_loss

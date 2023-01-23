@@ -42,7 +42,7 @@ parser.add_argument('--d_path', default="/content/logs/train/cifar10/checkpoints
 parser.add_argument('--g_path', default="/content/logs/train/cifar10/checkpoints_Gaus_crnn_gan_1_/g_best.pth", help='path to the trained base network')
 parser.add_argument('--mode', type=str, default='train',   help='either "train" or "sample" ')
 parser.add_argument('--dataset_type', default ='Stock' ,type= str , help='image dataset or others ["images","uci"]')
-parser.add_argument('--features', default = 3, type= int,   help='features of time series')
+parser.add_argument('--features', default = 5, type= int,   help='features of time series')
 #Sine, Stock 5 Energy 28 Chickpox 20
 
 parser.add_argument('--seq_length', default = 32 ,type= int,   help='length of time series')
@@ -80,7 +80,7 @@ parser.add_argument('--dataset', default='cifar10',type= str,  help='name of the
 parser.add_argument('--device', default = 0 ,type= int,   help='gpu device [0]')
 parser.add_argument('--seed', default = 0 ,type= int ,    help='seed for randomness [0]')
 parser.add_argument('--dtype', default='32', type= str,   help='32 for float32 and 64 for float64 ["32"]')
-parser.add_argument('--num_workers', default=4, type=int, help='Number of workers of the dataloader [4]')
+parser.add_argument('--num_workers', default=0, type=int, help='Number of workers of the dataloader [4]')
 #parser.add_argument('--dataparallel', action='store_true', help='parallelize over multiple gpus [False]')
 parser.add_argument('--dataparallel', action='store_true', help='parallelize over multiple gpus [False]')
 parser.add_argument('--slurm_id', default = '',type= str,  help='job id when using slurm, modified internally ['']')

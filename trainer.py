@@ -22,10 +22,12 @@ import pdb
 
 import timeit
 
+
+
 import helpers as hp
 import compute as cp
 import samplers
-#from utils import timer
+from utils import timer
 from scores import get_predictive_score, get_discriminative_score
 from utils.visualization import do_tSNE_Analysis, do_PCA_Analysis
 
@@ -48,7 +50,7 @@ class Trainer(object):
         self.pp = pprint.PrettyPrinter(indent=4)
         self.pp.pprint(vars(args))
         print('==> Building model..')
-        #self.timer = Timer()
+        self.timer = timer.Timer()
         self.mode = args.mode
         self.build_model()
 
@@ -371,7 +373,7 @@ class Trainer(object):
 
     def compute_log_partition(self,fake_results, net_type, with_batch_est = False):
         batch_log_partition = torch.logsumexp(-fake_results, dim=0)- np.log(fake_results.shape[0])
-        batch_log_partition = cp.batch_log_partition.squeeze()
+        batch_log_partition = batch_log_partition.squeeze()
         val_log_partition = self.log_partition
         tmp = fake_results + val_log_partition
 

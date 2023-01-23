@@ -120,7 +120,7 @@ def google_data_loading (seq_length):
 
     #### from https://github.com/jsyoon0823/TimeGAN
     # Load Google Data
-    x = np.loadtxt('data/stock_data.csv', delimiter = ",",skiprows = 1)
+    x = np.loadtxt("C:\\Users\cwatts\Time GEBM\Time-GEBM\data\stock_data.csv", delimiter = ",",skiprows = 1)
     # Flip the data to make chronological data
     x = x[:,:-1]
     x = x[::-1]
