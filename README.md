@@ -7,4 +7,6 @@ This is the code for my MSc Computational Statistics and Machine Learning thesis
 [3] https://arxiv.org/abs/1611.09904
 
 
+## Introduction
 
+This repository contains the work for my MSc Computational Statistics and Machine Learning thesis at UCL. In this project I develop two [**Generalized Energy Based Models**](https://arxiv.org/abs/2003.05033) for time-series generation. The first extends the attention-based GAN TTS-GAN[2] and the second the recurrent-based GAN C-RNN-GAN[3].
